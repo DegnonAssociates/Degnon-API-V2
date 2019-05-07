@@ -1,0 +1,5 @@
+{
+	"name": "Degnon API",
+	"jwtPrivateKey": "",
+	"db":"mongodb://localhost/neon"
+}
