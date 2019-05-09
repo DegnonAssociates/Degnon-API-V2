@@ -3,8 +3,9 @@ const compression  = require('compression');
 const express      = require('express');
 const errorHandler = require('../middleware/error');
 const home         = require('../routes/home');
-const neonAuth     = require('../routes/neon/auth');
+const neonLogin    = require('../routes/neon/login');
 const neonLogout   = require('../routes/neon/logout');
+const neonAccounts = require('../routes/neon/accounts');
 
 
 module.exports = function(app) {
@@ -15,8 +16,9 @@ module.exports = function(app) {
 	app.use(compression());
 
 	app.use('/', home);
-	app.use('/api/v2/neon/auth', neonAuth);
+	app.use('/api/v2/neon/login', neonLogin);
 	app.use('/api/v2/neon/logout', neonLogout);
+	app.use('/api/v2/neon/accounts', neonAccounts);
 	app.use(errorHandler);
 }
 

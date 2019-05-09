@@ -1,13 +1,15 @@
 const _        = require('lodash');
 const fetch    = require('node-fetch');
 const Joi      = require('joi');
+const config   = require('config');
 const validate = require('../../middleware/validate');
+const auth     = require('../../middleware/auth');
 const express  = require('express');
 const router   = express.Router();
 
 // POST user
 router.post('/', validate(validateAuth), async (req,res) => {
-	const loginUri = 'https://api.neoncrm.com/neonws/services/api/common/login';
+	const loginUri = config.get('neonUri') + '/login';
 	const loginApiKey = req.body.apiKey;
 	const loginOrgId = req.body.organizationId;
 	const getUrl = `${loginUri}?login.apiKey=${loginApiKey}&login.orgid=${loginOrgId}`;

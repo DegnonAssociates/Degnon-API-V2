@@ -2,12 +2,10 @@ const request = require('supertest');
 const fetch   = require('node-fetch');
 const config  = require('config');
 
-describe('NEON client authentication', () => {
+describe('NEON client login', () => {
 	let server;
 	let loginApiKey;
 	let loginOrgId;
-	const loginUri = 'https://api.neoncrm.com/neonws/services/api/common/login';
-	
 
 	beforeEach(() => {
 		server = require('../../../index');
@@ -20,7 +18,7 @@ describe('NEON client authentication', () => {
 
 	const exec = () => {
 		return request(server)
-			.post('/api/neon/auth')
+			.post('/api/v2/neon/login')
 			.send({ organizationId: loginOrgId, apiKey: loginApiKey });
 	}
 
@@ -38,7 +36,7 @@ describe('NEON client authentication', () => {
 		expect(res.status).toBe(400); 
 	});
 
-	it('should return a session ID if authorization succeeds', async () => {
+	it('should return a session ID if login authorization succeeds', async () => {
 		const res = await exec();	
 
 		expect(res.status).toBe(200);
@@ -55,7 +53,7 @@ describe('NEON client logout', () => {
 	beforeEach(async () => {
 		server = require('../../../index');
 		const login = await request(server)
-			.post('/api/neon/auth')
+			.post('/api/v2/neon/login')
 			.send({ organizationId: loginOrgId, apiKey: loginApiKey });
 		neonSessionId = login.text;
 	});
@@ -65,7 +63,7 @@ describe('NEON client logout', () => {
 
 	const exec = () => {
 		return request(server)
-			.post('/api/neon/logout')
+			.post('/api/v2/neon/logout')
 			.send({ sessionId: neonSessionId });
 	}
 
