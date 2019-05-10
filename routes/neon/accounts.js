@@ -8,22 +8,38 @@ const accountUri = config.get('neonUri') + '/account';
 
 // GET all accounts
 router.get('/', auth, async (req,res) => {
-	const getUrl = `${accountUri}/listAccountsByDefault?responseType=json&userSessionId=${req.token}`;
+	let response;
+	const getUrl = `${accountUri}/listAccountsByDefault?userSessionId=${req.token}`;
 
 	const request = await fetch(getUrl);
 	try {
-		const response = await request.json();	
+		response = await request.json();	
 	}
 	catch (ex) {
-		return res.status(400).send('Bad Request: Invalid token');
+		return res.status(400).send('Bad Request');
 	}
+	if(response.listAccountsByDefaultResponse.operationResult === 'FAIL')
+		return res.status(400).send('Bad Request: Invalid token');
 			
-	res.send(response);
+	res.send(response.listAccountsByDefaultResponse);
 });
 
 // GET one account
 router.get('/:id', auth, async (req,res) => {
+	let response;
+	const getUrl = `${accountUri}/retrieveIndividualAccount?userSessionId=${req.token}&accountId=${req.params.id}`;
 
+	const request = await fetch(getUrl);
+	try {
+		response = await request.json();	
+	}
+	catch (ex) {
+		return res.status(400).send('Bad Request');
+	}
+	if(response.listAccountsByDefaultResponse.operationResult === 'FAIL')
+		return res.status(400).send('Bad Request: Invalid token');
+			
+	res.send(response);
 });
 
 module.exports = router;

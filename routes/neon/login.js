@@ -9,7 +9,7 @@ const router   = express.Router();
 
 // POST user
 router.post('/', validate(validateAuth), async (req,res) => {
-	const loginUri = config.get('neonUri') + '/login';
+	const loginUri = config.get('neonUri') + '/common/login';
 	const loginApiKey = req.body.apiKey;
 	const loginOrgId = req.body.organizationId;
 	const getUrl = `${loginUri}?login.apiKey=${loginApiKey}&login.orgid=${loginOrgId}`;

@@ -1,5 +1,6 @@
 const _        = require('lodash');
 const fetch    = require('node-fetch');
+const config   = require('config');
 const Joi      = require('joi');
 const validate = require('../../middleware/validate');
 const express  = require('express');
@@ -7,7 +8,7 @@ const router   = express.Router();
 
 // POST user
 router.post('/', validate(validateSession), async (req,res) => {
-	const logoutUri = 'https://api.neoncrm.com/neonws/services/api/common/logout';
+	const logoutUri = config.get('neonUri') + '/common/logout';
 	const sessionId = req.body.neonSessionId;
 	const getUrl = `${logoutUri}?userSessionId=${sessionId}`;
 

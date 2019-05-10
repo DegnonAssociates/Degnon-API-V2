@@ -2,5 +2,5 @@
 	"name": "Degnon API",
 	"jwtPrivateKey": "",
 	"db":"mongodb://localhost/neon",
-	"neonUri":"https://api.neoncrm.com/neonws/services/api/common"
+	"neonUri":"https://api.neoncrm.com/neonws/services/api"
 }

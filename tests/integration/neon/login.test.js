@@ -1,5 +1,4 @@
 const request = require('supertest');
-const fetch   = require('node-fetch');
 const config  = require('config');
 
 describe('NEON client login', () => {

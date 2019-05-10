@@ -1,5 +1,4 @@
 const request = require('supertest');
-const fetch   = require('node-fetch');
 const config  = require('config');
 
 describe('NEON Accounts', () => {
@@ -45,9 +44,10 @@ describe('NEON Accounts', () => {
 				.get('/api/v2/neon/accounts/')
 				.set('x-auth-token', login.text);
 
-			console.log(login.text);
-
 			expect(response.status).toBe(200);
+			expect(response.body.operationResult).toEqual('SUCCESS');
+			expect(Object.keys(response.body)).toEqual(
+				expect.arrayContaining(['page', 'searchResults']));
 		});
 	});
 });
