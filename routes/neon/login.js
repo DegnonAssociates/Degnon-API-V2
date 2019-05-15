@@ -3,7 +3,6 @@ const fetch    = require('node-fetch');
 const Joi      = require('joi');
 const config   = require('config');
 const validate = require('../../middleware/validate');
-const auth     = require('../../middleware/auth');
 const express  = require('express');
 const router   = express.Router();
 
