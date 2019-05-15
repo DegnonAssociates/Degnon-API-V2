@@ -9,7 +9,7 @@ const router   = express.Router();
 // POST user
 router.post('/', validate(validateSession), async (req,res) => {
 	const logoutUri = config.get('neonUri') + '/common/logout';
-	const sessionId = req.body.neonSessionId;
+	const sessionId = req.body.sessionId;
 	const getUrl = `${logoutUri}?userSessionId=${sessionId}`;
 
 	const request = await fetch(getUrl);
@@ -25,7 +25,7 @@ router.post('/', validate(validateSession), async (req,res) => {
 
 function validateSession(req) {
 	const schema = {
-		neonSessionId: Joi.string().min(32).max(32).required()
+		sessionId: Joi.string().min(32).max(32).required()
 	};
 
 	return Joi.validate(req, schema);

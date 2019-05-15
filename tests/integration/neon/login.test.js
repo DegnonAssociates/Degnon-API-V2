@@ -84,6 +84,6 @@ describe('NEON client logout', () => {
 	it('should return 200 if valid logout is completed', async () => {
 		let res = await exec();
 
-		expect(res.status).toBe(400);
+		expect(res.status).toBe(200);
 	});
 });
