@@ -1,6 +1,7 @@
 const fetch    = require('node-fetch');
 const Joi      = require('joi');
 const config   = require('config');
+const jwt      = require('jsonwebtoken');
 const auth     = require('../../middleware/auth');
 const validate = require('../../middleware/validate');
 const express  = require('express');
@@ -19,8 +20,13 @@ router.post('/', [auth, validate(validateAuth)], async (req,res) => {
 	if (response.authenticateUserResponse.operationResult === 'FAIL') 
 		return res.status(400).send('Invalid username/password');
 	
-	res.send(response.authenticateUserResponse);	
+	const payload = encodePayload(response.authenticateUserResponse);
+	res.send(payload);	
 });
+
+function encodePayload(data) {
+	return jwt.sign( data, config.jwtPrivateKey );
+}
 
 function validateAuth(req) {
 	const schema = {
